@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 
 def index(request):
-    return HttpResponse('Olá mundo!')
+    return render(request, 'app\index.html')
 
 def dashboardPanel(request):
     return HttpResponse('Painel de Indicadores')
