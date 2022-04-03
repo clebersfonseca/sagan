@@ -3,28 +3,86 @@
 {% block title %}Lista de Objetos{% endblock %}
 
 {% block content %}
-    <div class="table-responsive">
-        <table class="table">
-            <thead class="thead-dark">
-                <tr>
-                    {% for head in d.columns %}
-                        <th> {{head}} </th>
-                    {% endfor %}
-                </tr>
-            </thead>
-            <tbody>
-                {% for item in d.data %}
-                    <tr>
-                        <td>{{item.0}}</td>
-                        <td>{{item.1}}</td>
-                        <td>{{item.2}}</td>
-                        <td>{{item.3}}</td>
-                        <td>{{item.4}}</td>
-                        <td>{{item.5}}</td>
-                        <td>{{item.6}}</td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+    <div class="container">
+        <div class="row">
+            <div class="input-group">
+                <div class="form-outline">
+                    <p>Pesquise um objeto de interesse:</p>
+                    <input type="search" id="form1" class="form-control" />
+                </div>
+                <button type="button" class="btn">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col"></div>
+            <div class="col">
+                <div class="table-responsive text-nowrap" style="max-height: 520px; border-radius: 20px;">
+                    <table class="table table-bordered">
+                        <thead class="thead" style="background-color:#e9dbff;">
+                            <tr>
+                                <th>TESS Input Catalog ID (TIC ID)</th>
+                                <th>TESS Object of Interest (TOI)</th>
+                                <th>TESS Disposition</th>
+                                <th>Fonte</th>
+                                <th>Período (dias)</th>
+                                <th>Data de Identificação TOI</th>
+                                <th>Data de Atualização TOI</th>
+                                <th>Última Modificação</th>
+                                <th>Comentários</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in d.data %}
+                                <tr>
+                                    <td class="ticID" span="{{item.1}}">{{item.1}}</td>
+                                    <td>{{item.2}}</td>
+                                    <td>{{item.3}}</td>
+                                    <td>{{item.4}}</td>
+                                    <td>{{item.5}}</td>
+                                    <td>{{item.6}}</td>
+                                    <td>{{item.7}}</td>
+                                    <td>{{item.8}}</td>
+                                    <td>{{item.9}}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col"></div>
+        </div>
+        <div id="obsModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                
+            </div>
+        </div>
     </div>
+    <script>
+        var modal = document.getElementById("obsModal");
+        var obj = document.querySelectorAll(".ticID");
+        var span = document.getElementsByClassName("close")[0];
+
+        function abrirModal() {
+            ticID = this.getAttribute("span");
+            console.log(ticID);
+            modal.style.display = "block";
+        }
+
+        obj.forEach(function (item) {
+            item.addEventListener("click", abrirModal);
+        });
+
+        span.onclick = function(){
+            modal.style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
 {% endblock %}
