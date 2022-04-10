@@ -7,8 +7,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>{% block title %} {% endblock %}</title>
         <link rel="stylesheet" href="{% static 'app/style.css' %}">
+        <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap" rel="stylesheet">
         <link href="{% static 'app/fonts/css/fontawesome.css' %}" rel="stylesheet">
         <link href="{% static 'app/fonts/css/brands.css' %}" rel="stylesheet">
@@ -28,7 +30,7 @@
             }
         </style>
     </head>
-    <body>
+    <body style="background-image: url(../../app/static/app/background.jpg);">
         <div id="lateralMenu" class="sidenav">
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()" style="vertical-align: middle;">
                 <span style="color: #5B3FBF;">
@@ -47,6 +49,25 @@
                     <i class="fa-solid fa-bars fa-2x"></i>
                 </span>
             </button>
+            <span style="
+            position: absolute;
+            width: 152px;
+            height: 73px;
+            left: 1178px;
+            top: 11px;
+
+            font-family: 'Inter';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 58px;
+            line-height: 72px;
+            /* identical to box height */
+
+            letter-spacing: -0.02em;
+
+            color: #FFFFFF;
+
+            text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.35);">SAGAN</span>
         </nav>
         {% block content %}
         {% endblock %}

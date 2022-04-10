@@ -68,6 +68,14 @@
         function abrirModal() {
             ticID = this.getAttribute("span");
             console.log(ticID);
+                $.ajax({
+                    type: "POST",
+                    url: "{% url 'modal' %}",
+                    data: { csrfmiddlewaretoken: "{{ csrf_token }}",
+                            id : ticID }
+                }).done(function(response){
+                        console.log("{{ id }}")
+                });
             modal.style.display = "block";
         }
 

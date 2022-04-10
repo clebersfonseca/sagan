@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from matplotlib.font_manager import json_dump, json_load
 import pandas as pd
 import json
+import lightkurve
 
 def index(request):
     return render(request, 'app/home.html')
@@ -25,5 +26,12 @@ def objectList(request):
 
     return render(request,'app/objectlist.html', context)
 
-def tessObject(request, tessID):
-    return render(request, 'app/object.html', tessID)
+def returnModal(request):
+    if request.method == 'POST':
+        ticID = request.POST['id']
+        context = {'id' : ticID}
+    return HttpResponse(request, context) 
+    
+
+def tessObject(request, ticID, indexList):
+    return render(request, 'app/object.html', ticID)
