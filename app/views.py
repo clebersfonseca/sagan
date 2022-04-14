@@ -1,9 +1,12 @@
+from ast import If
+from django import http
 from django.shortcuts import render
 from django.http import HttpResponse
 from matplotlib.font_manager import json_dump, json_load
 import pandas as pd
 import json
-import lightkurve
+import lightkurve as lk
+from django.http import HttpResponseBadRequest, JsonResponse
 
 def index(request):
     return render(request, 'app/home.html')
@@ -27,11 +30,12 @@ def objectList(request):
     return render(request,'app/objectlist.html', context)
 
 def returnModal(request):
-    if request.method == 'POST':
-        ticID = request.POST['id']
-        context = {'id' : ticID}
-    return HttpResponse(request, context) 
-    
+    ticID = request.POST['id']
+    idParam = 'TIC ' + ticID
+    search_result = lk.search_lightcurve(idParam, mission='TESS')
+    obsJson = json.dumps(search_result.__dict__)
+    obs = {'id' : obsJson}
+    return JsonResponse(obs)
 
 def tessObject(request, ticID, indexList):
     return render(request, 'app/object.html', ticID)

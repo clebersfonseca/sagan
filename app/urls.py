@@ -7,6 +7,6 @@ urlpatterns = [
     path('lista/', views.objectList, name='list'),
     path('sobre/', views.about, name='about'),
     path('contribue/', views.contribute, name='contribute'),
-    path('lista/', views.returnModal, name='modal'),
+    path('lista/observacoes', views.returnModal, name='modal'),
     path('objeto/<int:ticID>/', views.tessObject, name='object')
 ]

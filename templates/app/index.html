@@ -30,56 +30,63 @@
             }
         </style>
     </head>
-    <body style="background-image: url(../../app/static/app/background.jpg);">
-        <div id="lateralMenu" class="sidenav">
+    <body>
+        <div id="lateralMenu" class="sidenav" style="z-index:3;">
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()" style="vertical-align: middle;">
                 <span style="color: #5B3FBF;">
                     <i class="fa-solid fa-chevron-left"></i>
                 </span>
             </a>
+            <a href="{% url 'index' %}" id="li" class="btn btn-custom text-dark" role="button">Início</a><br>
             <a href="{% url 'list' %}" id="li" class="btn btn-custom text-dark" role="button">Lista de Objetos</a><br>
-            <a href="{% url 'panel' %}" id="li" class="btn btn-custom text-dark" role="button">Painel de Indicadores</a><br>
             <a href="{% url 'about' %}" id="li" class="btn btn-custom text-dark" role="button">Sobre</a><br>
             <a href="{% url 'contribute' %}" id="li" class="btn btn-custom text-dark" role="button">Contribua</a><br>
         </div>
-
+        <div class="overlay"></div>
         <nav class="navbar" style="background-color: #5B3FBF;">
             <button type="button" class="btn btn-default btn-lg"  onclick="openNav()" style="vertical-align: middle; background-color:transparent;">
                 <span style="color: white;">
                     <i class="fa-solid fa-bars fa-2x"></i>
                 </span>
             </button>
-            <span style="
-            position: absolute;
-            width: 152px;
-            height: 73px;
-            left: 1178px;
-            top: 11px;
-
-            font-family: 'Inter';
-            font-style: normal;
-            font-weight: 400;
-            font-size: 58px;
-            line-height: 72px;
-            /* identical to box height */
-
-            letter-spacing: -0.02em;
-
-            color: #FFFFFF;
-
-            text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.35);">SAGAN</span>
+            <a class="navbar-brand" href="{% url 'index' %}">
+                <span style="
+                    position: relative;
+                    font-family: 'Inter';
+                    font-style: normal;
+                    font-weight: 400;
+                    font-size: 40px;
+                    letter-spacing: -0.02em;
+                    color: #FFFFFF;
+                    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.35);">SAGAN
+                </span>
+            </a>
         </nav>
+
         {% block content %}
         {% endblock %}
+        
+        <style>
+            .overlay{
+                display: none;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                left: 0;
+                position: fixed;
+                background-color: rgba(0, 0, 0, 0.5);
+                z-index: 2;
+            }
+        </style>
         <script>
             function openNav() {
                 document.getElementById("lateralMenu").style.width = "350px";
-                document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
+                $('.overlay').fadeIn(1000);
             }
 
             function closeNav() {
                 document.getElementById("lateralMenu").style.width = "0";
-                document.body.style.backgroundColor = "white";
+                $('.overlay').fadeOut(1000);
             }
         </script>
     </body>
