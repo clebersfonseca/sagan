@@ -2,11 +2,10 @@ from ast import If
 from django import http
 from django.shortcuts import render
 from django.http import HttpResponse
-from matplotlib.font_manager import json_dump, json_load
 import pandas as pd
 import json
 import lightkurve as lk
-from django.http import HttpResponseBadRequest, JsonResponse
+from django.http import JsonResponse
 
 def index(request):
     return render(request, 'app/home.html')
@@ -33,9 +32,11 @@ def returnModal(request):
     ticID = request.POST['id']
     idParam = 'TIC ' + ticID
     search_result = lk.search_lightcurve(idParam, mission='TESS')
-    obsJson = json.dumps(search_result.__dict__)
-    obs = {'id' : obsJson}
-    return JsonResponse(obs)
+    result = str(search_result)
+    
+    df = pd.read_json(result)
+
+    return HttpResponse(df.to_json())
 
 def tessObject(request, ticID, indexList):
     return render(request, 'app/object.html', ticID)

@@ -8,12 +8,13 @@
             <h4 style="
             font-family: 'Inter';
             font-style: normal;
+            color: rgb(0, 0, 0);
             font-weight: lighter;">Pesquise um objeto de interesse:</h4>
             <div class="input-group">
                 <input type="search" id="form1" class="form-control" />
-                <span class="input-group-append" style="z-index: 0;">
-                    <button type="button" class="btn btn-outline-secondary" style="color: rgb(255, 255, 255); background-color: rgb(94, 11, 112);">
-                        <i class="fas fa-search"></i>
+                <span class="input-group-append" style="z-index: 0; background-color: rgb(255, 255, 255);">
+                    <button class="btn btn-outline-secondary border-left-0 border" type="button">
+                        <i style="color: #5B3FBF; " class="fas fa-search"></i>
                     </button>
                 </span>
             </div>
@@ -64,7 +65,9 @@
                 <div id="obsModal" class="modal">
                     <div class="modal-content">
                         <span class="close">&times;</span>
-                        
+                        <div class="content">
+                            
+                        </div>
                     </div>
                 </div>
             </div>
@@ -84,7 +87,35 @@
                     type: "POST",
                     data: { csrfmiddlewaretoken: "{{ csrf_token }}", id : ticID },
                     success: function (response) {
-                        console.log(response)
+                        const obs = JSON.parse(response)
+                        var table = `
+                            <table class="table table-responsive">
+                                <tr>
+                                    <th>#</th>
+                                    <th>m</th>
+                                    <th>y</th>
+                                    <th>a</th>
+                                    <th>e</th>
+                                    <th>t</th>
+                                    <th>d</th>
+                                </tr>
+                        `;
+
+                        for(x in obs["#"]){
+                            table += `
+                                <tr>
+                                    <td>${obs["#"][x]}</td>
+                                    <td>${obs["mission"][x]}</td>
+                                    <td>${obs["year"][x]}</td>
+                                    <td>${obs["author"][x]}</td>
+                                    <td>${obs["exptime"][x]}</td>
+                                    <td>${obs["target_name"][x]}</td>
+                                    <td>${obs["distance"][x]}</td>
+                                </tr>
+                            `;
+                        }
+                        table += "</table>";
+                        $(".content").html(table);
                     }
                 });
             modal.style.display = "block";
