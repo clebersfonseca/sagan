@@ -7,6 +7,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>{% block title %} {% endblock %}</title>
         <link rel="stylesheet" href="{% static 'app/style.css' %}">
+        <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap" rel="stylesheet">
@@ -36,7 +37,6 @@
                 </span>
             </a>
             <a href="{% url 'list' %}" id="li" class="btn btn-custom text-dark" role="button">Lista de Objetos</a><br>
-            <a href="{% url 'panel' %}" id="li" class="btn btn-custom text-dark" role="button">Painel de Indicadores</a><br>
             <a href="{% url 'about' %}" id="li" class="btn btn-custom text-dark" role="button">Sobre</a><br>
             <a href="{% url 'contribute' %}" id="li" class="btn btn-custom text-dark" role="button">Contribua</a><br>
         </div>

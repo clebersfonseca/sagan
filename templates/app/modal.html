@@ -1,0 +1,30 @@
+<div id="obsModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <div class="content">
+            <table class="table table-responsive">
+                <tr>
+                    <th>#</th>
+                    <th>m</th>
+                    <th>y</th>
+                    <th>a</th>
+                    <th>e</th>
+                    <th>t</th>
+                    <th>d</th>
+                </tr>
+                {% for obs in d %}
+                <tr class="observation" data-href="{% url 'object' ticID=obs.target_name ind=forloop.counter0 %}">
+                    <td>
+                        <a href="{% url 'object' ticID=obs.target_name ind=forloop.counter0 %}">{{forloop.counter0}}</a></td>
+                    <td>{{obs.mission}}</td>
+                    <td>{{obs.year}}</td>
+                    <td>{{obs.author}}</td>
+                    <td>{{obs.exptime}}</td>
+                    <td>{{obs.target_name}}</td>
+                    <td>{{obs.distance}}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>
