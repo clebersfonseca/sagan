@@ -1,3 +1,45 @@
 {% extends 'app/index.html' %}
+{% load static %}
 
 {% block title %}Página Inicial{% endblock %}
+
+{% block content %}
+<style>
+    body{
+        background-image: url("{% static 'app/media/universe_background.jpg' %}");
+        background-size: cover;
+    }
+    .container{
+        margin-top: 17%;
+    }
+</style>
+
+<div class="container" style="width: 100%;">
+    <div class="row align-items-center">
+        <div class="col"></div>
+        <div class="col">
+            <img src="{% static 'app/media/logo.png' %}" class="img-fluid" alt="">
+        </div>
+        <div class="col"></div>
+    </div>
+    <br>
+    <div class="row align-items-center">
+        <div class="col"></div>
+        <div class="col">
+            <a href="{% url 'list' %}" 
+            class="btn btn-outline-primary btn-lg btn-block" 
+            role="button" 
+            aria-pressed="true" 
+            style="
+                font-size: 30px;
+                color: rgb(255, 255, 255);
+                border-width: 3px;
+                border-color: white;
+                border-radius: 15px;
+                ">Explore agora!</a>
+        </div>
+        <div class="col"></div>
+    </div>
+</div>
+
+{% endblock %}

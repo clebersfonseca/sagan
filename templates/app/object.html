@@ -3,117 +3,59 @@
 {% block title %}Objeto{% endblock %}
 
 {% block content %}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.4.4/d3.js"></script>
-<div id="graph">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.js"></script>
 
-</div>
+<canvas id="myChart" width='400' height='400'></canvas>
 
 <script>
+    const ctx = $("#myChart");
+    var x_final = [];
 
-    $(document).ready(function () {
-        $.ajax({
-            url: "{% url 'retornoJ' ticID ind %}",
-            type: "GET",
-            success: function (response) {
-                result = JSON.parse(response)
-                console.log(result)
-            }
-        });
+    {% for i in x %}
+        x_final.push({{i|floatformat:"0"}})
+    {% endfor %}
 
-        var margin = { top: 10, right: 30, bottom: 30, left: 50 },
-            width = 460 - margin.left - margin.right,
-            height = 400 - margin.top - margin.bottom;
-
-        var svg = d3.select("#graph")
-            .append("svg")
-            .attr("width", width + margin.left + margin.right)
-            .attr("height", height + margin.top + margin.bottom)
-            .append("g")
-
-            .attr("transform",
-                "translate(" + margin.left + "," + margin.top + ")");
-
-        d3.json(result,
-
-            // When reading the csv, I must format variables:
-            function (d) {
-                return {
-                    date: d.time,
-                    value: d.data
+    const myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: x_final,
+            datasets: [{
+                label: 'XYZ',
+                data: {{y}},
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            pointStyle: 'none',
+            scales: {
+                y: {
+                    type: 'linear'
+                },
+                x: {
+                    padding: 5,
+                    ticks: {
+                        stepSize:1000
+                    }
                 }
-            },
-
-            // Now I can use this dataset:
-            function (data) {
-
-                // Add X axis --> it is a date format
-                var x = d3.scaleTime()
-                    .domain(d3.extent(data, function (d) {
-                        return d.date;
-                    }))
-                    .range([0, width]);
-                svg.append("g")
-                    .attr("transform", "translate(0," + (height + 5) + ")")
-                    .call(d3.axisBottom(x).ticks(5).tickSizeOuter(0));
-
-                // Add Y axis
-                var y = d3.scaleLinear()
-                    .domain(d3.extent(data, function (d) {
-                        return +d.value;
-                    }))
-                    .range([height, 0]);
-                svg.append("g")
-                    .attr("transform", "translate(-5,0)")
-                    .call(d3.axisLeft(y).tickSizeOuter(0));
-
-                // Add the area
-                svg.append("path")
-                    .datum(data)
-                    .attr("fill", "#69b3a2")
-                    .attr("fill-opacity", .3)
-                    .attr("stroke", "none")
-                    .attr("d", d3.area()
-                        .x(function (d) {
-                            return x(d.date)
-                        })
-                        .y0(height)
-                        .y1(function (d) {
-                            return y(d.value)
-                        })
-                    )
-
-                // Add the line
-                svg.append("path")
-                    .datum(data)
-                    .attr("fill", "none")
-                    .attr("stroke", "#69b3a2")
-                    .attr("stroke-width", 4)
-                    .attr("d", d3.line()
-                        .x(function (d) {
-                            return x(d.date)
-                        })
-                        .y(function (d) {
-                            return y(d.value)
-                        })
-                    )
-
-                // Add the line
-                svg.selectAll("myCircles")
-                    .data(data)
-                    .enter()
-                    .append("circle")
-                    .attr("fill", "red")
-                    .attr("stroke", "none")
-                    .attr("cx", function (d) {
-                        return x(d.date)
-                    })
-                    .attr("cy", function (d) {
-                        return y(d.value)
-                    })
-                    .attr("r", 3)
-
-            })
+            }
+        }
     });
-
 </script>
 {% endblock %}

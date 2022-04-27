@@ -75,7 +75,7 @@
         function abrirModal() {
             ticID = this.getAttribute("span");
                 $.ajax({
-                    url: "{% url 'modal2' %}",
+                    url: "{% url 'modal' %}",
                     type: "POST",
                     data: { csrfmiddlewaretoken: "{{ csrf_token }}", id : ticID },
                     success: function (response) {
