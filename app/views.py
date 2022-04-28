@@ -48,8 +48,10 @@ def tessObject(request, ticID, ind):
     
     lc = search_result[obsIndex].download()
 
-    x = lc.time.value.tolist()
-    y = lc.flux.value.tolist()
+    normalized_lc = lc.normalize()
+
+    x = normalized_lc.time.value.tolist()
+    y = [str(i) for i in normalized_lc.flux.value.tolist()]
 
     data = {'x' : x, 'y' : y}
 
