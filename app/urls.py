@@ -8,6 +8,7 @@ urlpatterns = [
     path('sobre/', views.about, name='about'),
     path('lista/observacoes', views.modal, name='modal'),
     path('objeto/<int:ticID>/<int:ind>', views.tessObject, name='object'),
+    path('objeto/to_periodogram/<int:ticID>/<str:ind>', views.foldLightCurve, name='folded'),
 ]
 
 urlpatterns += staticfiles_urlpatterns()

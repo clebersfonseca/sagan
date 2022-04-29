@@ -14,7 +14,7 @@ def about(request):
     return render(request, 'app/about.html')
 
 def objectList(request):
-    df = pd.read_csv('exofop_tess_toisv1.csv', sep=';')
+    df = pd.read_csv('exofop_tess_tois.csv', sep=';')
     jsonList = df.reset_index().to_json(orient='split')
     data = []
     data = json.loads(jsonList)
@@ -29,7 +29,6 @@ def modal(request):
     result = str(search_result)
 
     df = pd.read_json(result)
-    df.rename(columns={"year" : "ano"})
 
     jsonData = df.reset_index().to_json(orient="records")
     data = []
@@ -52,6 +51,28 @@ def tessObject(request, ticID, ind):
 
     x = normalized_lc.time.value.tolist()
     y = [str(i) for i in normalized_lc.flux.value.tolist()]
+
+    data = {'x' : x, 'y' : y, 'id' : ticID, 'index' : obsIndex}
+
+    return render(request, 'app/object.html', data)
+
+def foldLightCurve(request, ticID, ind):
+    ticID = ticID
+    obsIndex = int(ind)
+
+    idParam = 'TIC ' + str(ticID)
+    search_result = lk.search_lightcurve(idParam, mission='TESS')
+    
+    lc = search_result[obsIndex].download()
+
+    normalized_lc = lc.normalize()
+
+    pg = normalized_lc.to_periodogram(oversample_factor=10)
+
+    folded_lc = normalized_lc.fold(period=4*pg.period_at_max_power)
+
+    x = folded_lc.time.value.tolist()
+    y = [str(i) for i in folded_lc.flux.value.tolist()]
 
     data = {'x' : x, 'y' : y, 'id' : ticID}
 
