@@ -6,8 +6,9 @@
 {% block content %}
 <style>
     body{
-        background-image: url("{% static 'app/media/universe_background.jpg' %}");
+        background: url("{% static 'app/media/universe_background.jpg' %}") fixed;
         background-size: cover;
+        background-repeat: no-repeat;
     }
     h1{
         font-family: 'Inter';
@@ -19,6 +20,7 @@
     p{
         font-family: 'Inter';
         font-style: normal;
+        font-size: 20px;
         color: #FFFFFF;
         text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.35);
         text-align: justify;
@@ -39,7 +41,7 @@
     <br>
     <div class="row align-items-center">
         <div class="col"></div>
-        <div class="col-6">
+        <div class="col-8">
             <p>
                 O avanço científico e tecnológico nos vem permitindo explorar novos conceitos e temáticas que não o poderiam ser antes. Na área da astronomia esse fator é visivelmente perceptível. Nas últimas décadas pudemos constatar o aumento exponencial na descoberta de exoplanetas - isto é, corpos planetários fora de nosso sistema solar. Isso se deve não somente ao avanço tecnológico, mas também à democratização da ciência. A globalização permitiu maior rapidez na troca de conhecimento e o aumento na produção científica interdisciplinar. Em função disso, o processamento de quantidades massivas de informações pode ser dividido entre diversos pontos de pesquisa pelo mundo. O reflexo disso no estudo de exoplanetas foi o aumento em suas detecções.<br><br> Com o desenvolvimento de métodos de detecção como o trânsito, foi possível realizar novas descobertas de exoplanetas a partir da análise de assinaturas próprias conhecidas como curvas de luz. O problema reside na quantidade exorbitante de dados referentes a essas curvas. Nesse contexto, o projeto SAGAN tem como objetivo centralizar esse aglomerado de informações em um espaço voltado para sua análise, bem como disponibilizar ferramentas próprias que auxiliem o usuário durante a sua investigação. <br><br>O software foi desenvolvido como uma plataforma web, utilizando as linguagens conhecidas de front-end como HTML, CSS e JavaScript. Os dados referentes às observações de exoplanetas e suas curvas de luz foram coletados de dois bancos de dados externos, o IPAC e o MAST, ambos vinculados e/ou financiados pela NASA. Para interação entre a parte visual da plataforma e os dados a serem trabalhados foi utilizado a linguagem de programação Python, juntamente ao framework Django. As funções específicas de manuseio dos dados foram desenvolvidas utilizando a biblioteca escrita em Python, Lightkurve. A plataforma permite ao usuário localizar as observações de possíveis exoplanetas no banco de dados, e em seguida retornar as curvas de luz referentes ao objeto selecionado. A partir disso é possível manusear os gráficos gerados utilizando as ferramentas disponibilizadas na plataforma, e por fim exportá-los.
             </p>

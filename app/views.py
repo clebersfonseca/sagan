@@ -53,6 +53,6 @@ def tessObject(request, ticID, ind):
     x = normalized_lc.time.value.tolist()
     y = [str(i) for i in normalized_lc.flux.value.tolist()]
 
-    data = {'x' : x, 'y' : y}
+    data = {'x' : x, 'y' : y, 'id' : ticID}
 
     return render(request, 'app/object.html', data)

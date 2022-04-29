@@ -1,65 +1,111 @@
-{% load static %}  
+{% load static %}
 <!DOCTYPE html>
 <html lang="pt-br">
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>{% block title %} {% endblock %}</title>
-        <link rel="stylesheet" href="{% static 'app/style.css' %}">
-        <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap" rel="stylesheet">
-        <link href="{% static 'app/fonts/css/fontawesome.css' %}" rel="stylesheet">
-        <link href="{% static 'app/fonts/css/brands.css' %}" rel="stylesheet">
-        <link href="{% static 'app/fonts/css/solid.css' %}" rel="stylesheet">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-        <style>
-            .btn-custom{
-                background-color: transparent;
-            }
-            a:link{
-                font-size: 30px;
-                font-family: 'Inter', sans-serif;
-                text-align: center;
-            }
-            #li:hover{
-                background-color: #dadadb;
-            }
-        </style>
-    </head>
-    <body>
-        <div id="lateralMenu" class="sidenav">
-            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()" style="vertical-align: middle;">
-                <span style="color: #5B3FBF;">
-                    <i class="fa-solid fa-chevron-left"></i>
-                </span>
-            </a>
-            <a href="{% url 'list' %}" id="li" class="btn btn-custom text-dark" role="button">Lista de Objetos</a><br>
-            <a href="{% url 'about' %}" id="li" class="btn btn-custom text-dark" role="button">Sobre</a><br>
-            <a href="https://github.com/clebersfonseca/sagan" id="li" class="btn btn-custom text-dark" role="button">Contribua</a><br>
-        </div>
 
-        <nav class="navbar" style="background-color: #5B3FBF;">
-            <button type="button" class="btn btn-default btn-lg"  onclick="openNav()" style="vertical-align: middle; background-color:transparent;">
-                <span style="color: white;">
-                    <i class="fa-solid fa-bars fa-2x"></i>
-                </span>
-            </button>
-        </nav>
-        {% block content %}
-        {% endblock %}
-        <script>
-            function openNav() {
-                document.getElementById("lateralMenu").style.width = "350px";
-                document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
-            }
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %} {% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'app/style.css' %}">
+    <script src="https://code.jquery.com/jquery-3.6.0.js"
+        integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap" rel="stylesheet">
+    <link href="{% static 'app/fonts/css/fontawesome.css' %}" rel="stylesheet">
+    <link href="{% static 'app/fonts/css/brands.css' %}" rel="stylesheet">
+    <link href="{% static 'app/fonts/css/solid.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <style>
+        .btn-custom {
+            background-color: transparent;
+        }
 
-            function closeNav() {
-                document.getElementById("lateralMenu").style.width = "0";
-                document.body.style.backgroundColor = "white";
-            }
-        </script>
-    </body>
+        a:link {
+            font-size: 30px;
+            font-family: 'Inter', sans-serif;
+            text-align: center;
+        }
+
+        #li:hover {
+            background-color: #dadadb;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="lateralMenu" class="sidenav" style="z-index:3;">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()" style="vertical-align: middle;">
+            <span style="color: #5B3FBF;">
+                <i class="fa-solid fa-chevron-left"></i>
+            </span>
+        </a>
+        <a href="{% url 'index' %}" id="li" class="btn btn-custom text-dark" role="button">Início</a><br>
+        <a href="{% url 'list' %}" id="li" class="btn btn-custom text-dark" role="button">Lista de Objetos</a><br>
+        <a href="{% url 'about' %}" id="li" class="btn btn-custom text-dark" role="button">Sobre</a><br>
+        <a href="https://github.com/clebersfonseca/sagan" id="li" class="btn btn-custom text-dark"
+            role="button">Contribua</a><br>
+    </div>
+    <div class="overlay"></div>
+    <nav class="navbar" style="background-color: #5B3FBF;">
+        <button type="button" class="btn btn-default btn-lg" onclick="openNav()"
+            style="vertical-align: middle; background-color:transparent;">
+            <span style="color: white;">
+                <i class="fa-solid fa-bars fa-2x"></i>
+            </span>
+        </button>
+            <span style="
+                    position: relative;
+                    left: 32%;
+                    font-family: 'Inter';
+                    font-style: normal;
+                    font-weight: 400;
+                    font-size: 30px;
+                    letter-spacing: -0.02em;
+                    color: #FFFFFF;
+                    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.35);">ID {{id}}
+        </span>
+        <a class="navbar-brand" href="{% url 'index' %}">
+            <span style="
+                    position: relative;
+                    font-family: 'Inter';
+                    font-style: normal;
+                    font-weight: 400;
+                    font-size: 40px;
+                    letter-spacing: -0.02em;
+                    color: #FFFFFF;
+                    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.35);">SAGAN
+            </span>
+        </a>
+    </nav>
+    {% block content %}
+    {% endblock %}
+
+    <style>
+        .overlay {
+            display: none;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            position: fixed;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 2;
+        }
+    </style>
+    <script>
+        function openNav() {
+            document.getElementById("lateralMenu").style.width = "350px";
+            $('.overlay').fadeIn(1000);
+        }
+
+        function closeNav() {
+            document.getElementById("lateralMenu").style.width = "0";
+            $('.overlay').fadeOut(1000);
+        }
+    </script>
+</body>
+
 </html>

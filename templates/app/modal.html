@@ -1,30 +1,48 @@
-<div id="obsModal" class="modal">
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <div class="content">
-            <table class="table table-responsive">
+<div class="modal" tabindex="-1" role="dialog" id="obsModal" style="overflow-y: auto;">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document" style="max-width: 39%;">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Observações do Objeto</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <table class="table table-responsive text-nowrap" style="text-align: center;">
                 <tr>
-                    <th>#</th>
-                    <th>m</th>
-                    <th>y</th>
-                    <th>a</th>
-                    <th>e</th>
-                    <th>t</th>
-                    <th>d</th>
+                    <th>Índice</th>
+                    <th>Missão</th>
+                    <th>Ano</th>
+                    <th>Autor</th>
+                    <th>TIC ID</th>
                 </tr>
                 {% for obs in d %}
                 <tr class="observation" data-href="{% url 'object' ticID=obs.target_name ind=forloop.counter0 %}">
                     <td>
-                        <a href="{% url 'object' ticID=obs.target_name ind=forloop.counter0 %}">{{forloop.counter0}}</a></td>
-                    <td>{{obs.mission}}</td>
-                    <td>{{obs.year}}</td>
-                    <td>{{obs.author}}</td>
-                    <td>{{obs.exptime}}</td>
-                    <td>{{obs.target_name}}</td>
-                    <td>{{obs.distance}}</td>
+                        <a href="{% url 'object' ticID=obs.target_name ind=forloop.counter0 %}" style="font-size: 15px;">{{forloop.counter0}}</a>
+                    </td>
+                    <td>
+                        <a href="{% url 'object' ticID=obs.target_name ind=forloop.counter0 %}" style="font-size: 15px;">{{obs.mission}}</a>
+                    </td>
+                    <td>
+                        <a href="{% url 'object' ticID=obs.target_name ind=forloop.counter0 %}" style="font-size: 15px;">{{obs.year}}</a>
+                    </td>
+                    <td>
+                        <a href="{% url 'object' ticID=obs.target_name ind=forloop.counter0 %}" style="font-size: 15px;">{{obs.author}}</a>
+                    </td>
+                    <td>
+                        <a href="{% url 'object' ticID=obs.target_name ind=forloop.counter0 %}" style="font-size: 15px;">{{obs.target_name}}</a>
+                    </td>
                 </tr>
                 {% endfor %}
             </table>
         </div>
+      </div>
     </div>
 </div>
+
+<script>
+    $(".close").click(function(){
+        $("#obsModal").hide();
+    });
+</script>

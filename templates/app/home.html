@@ -6,11 +6,16 @@
 {% block content %}
 <style>
     body{
-        background-image: url("{% static 'app/media/universe_background.jpg' %}");
+        background: url("{% static 'app/media/universe_background.jpg' %}") fixed;
         background-size: cover;
+        background-repeat: no-repeat;
     }
     .container{
         margin-top: 17%;
+    }
+    .logo{
+        height: 183.3px;
+
     }
 </style>
 
@@ -18,7 +23,7 @@
     <div class="row align-items-center">
         <div class="col"></div>
         <div class="col">
-            <img src="{% static 'app/media/logo.png' %}" class="img-fluid" alt="">
+            <img src="{% static 'app/media/logo.png' %}" class="logo" alt="">
         </div>
         <div class="col"></div>
     </div>
@@ -29,6 +34,8 @@
             <a href="{% url 'list' %}" 
             class="btn btn-outline-primary btn-lg btn-block" 
             role="button" 
+            onMouseOver="this.style.backgroundColor='rgba(0,0,0,.8)'"
+            onMouseOut="this.style.backgroundColor='transparent'"
             aria-pressed="true" 
             style="
                 font-size: 30px;

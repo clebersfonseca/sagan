@@ -10,12 +10,69 @@
 <script>
     google.charts.load('current', {'packages':['corechart'], 'language':'pt-br'});
 
-    google.charts.setOnLoadCallback(drawChart);
+    function draw(){
+        drawChart();
+        drawToolbar();
+    }
 
     function drawChart() {
         var data = new google.visualization.DataTable();
-        data.addColumn('number', 'time');
-        data.addColumn('number', 'flux');
+        data.addColumn('number', 'Tempo');
+        data.addColumn('number', 'Fluxo');
+
+        var x = {{x|safe}}
+        var y = {{y|safe}}
+        var id = {{id}}
+
+        for (var i = 0; i < x.length; i++){
+            data.addRow([x[i], parseFloat(y[i])]);
+        }
+
+        var options = {
+            title:'Curva de Luz',
+            titlePosition: 'out',
+            titleTextStyle:{
+                fontName: 'Inter',
+                fontSize: 30,
+            },
+            curveType: 'none',
+            legend: 'none',
+            pointShape: 'star',
+            hAxis:{
+                title: 'Dias - Barycentric Julian Date (BJD)',
+                titleTextStyle: {
+                    fontName: 'Inter',
+                    fontSize: 20,
+                    bold: false
+                }
+            },
+            vAxis: {
+                title: 'Fluxo (J/m²/s)',
+                titleTextStyle: {
+                    fontName: 'Inter',
+                    fontSize: 20,
+                    bold: false
+                }
+            },
+            axisTitlesPosition: 'out',
+            colors: ['#500980'],
+            explorer: {
+                keepInBounds: true,
+                maxZoomOut: 1,
+                maxZoomIn: 0.02
+            },
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('lightcurve'));
+        chart.draw(data, options);
+    }
+
+    google.charts.setOnLoadCallback(draw);
+
+    function drawToolbar() {
+        var data = new google.visualization.DataTable();
+        data.addColumn('number', 'Tempo');
+        data.addColumn('number', 'Fluxo');
 
         var x = {{x|safe}}
         var y = {{y|safe}}
@@ -24,14 +81,37 @@
             data.addRow([x[i], parseFloat(y[i])]);
         }
 
-        var options = {
-            'title':'Curva de Luz',
-            curveType: 'function',
-        };
+        let csvContent = "data:text/csv;charset=utf-8," 
+            + data.map(e => e.join(",")).join("\n");
 
-        var chart = new google.visualization.LineChart(document.getElementById('lightcurve'));
-        chart.draw(data, options);
-    }
+        var encodedUri = encodeURI(csvContent);
+        var link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", "my_data.csv");
+        document.body.appendChild(link); // Required for FF
+
+        var components = [
+            {type: 'csv', datasource: 'https://spreadsheets.google.com/tq?key=pCQbetd-CptHnwJEfo8tALA'},
+        ];
+
+        var container = document.getElementById('exportOptions');
+        google.visualization.drawToolbar(container, components);
+    };
+
 </script>
-<div id="lightcurve" style="width: 900px; height: 500px"></div>
+
+<div class="container-fluid">
+    <div class="row align-items-center">
+        <div class="col d-flex align-items-center justify-content-center">
+            <div id="lightcurve" style="width: 100%; height: 550px; z-index: 0"></div>
+        </div>
+    </div>
+    <div class="row align-items-center justify-content-center">
+        <div class="col d-flex align-items-center justify-content-center">
+            <div class="toolBar" style="background-color: #5B3FBF; width: 90%; height: 60px; border-radius: 5px;">
+                <div id="exportOptions"></div>
+            </div>
+        </div>       
+    </div>
+</div>
 {% endblock %}

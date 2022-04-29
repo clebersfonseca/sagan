@@ -3,91 +3,125 @@
 {% block title %}Lista de Objetos{% endblock %}
 
 {% block content %}
-    <div class="container" >
-        <div class="row form-group mt-4">
-            <h4 style="
+<style>
+    ::-webkit-scrollbar-thumb {
+        background-color: rgb(255, 255, 255);
+        outline: 2px solid rgb(212, 212, 212);
+        outline-offset: -2px;
+    }
+
+    ::-webkit-scrollbar {
+        width: 1em;
+        height: 1em;
+        background-color: rgb(212, 212, 212);
+    }
+</style>
+<div class="container">
+    <div class="row form-group mt-4">
+        <h4 style="
             font-family: 'Inter';
             font-style: normal;
             color: rgb(0, 0, 0);
             font-weight: lighter;">Pesquise um objeto de interesse:</h4>
-            <div class="input-group">
-                <input type="search" id="form1" class="form-control" />
-                <span class="input-group-append" style="z-index: 0; background-color: rgb(255, 255, 255);">
-                    <button class="btn btn-outline-secondary border-left-0 border" type="button">
-                        <i style="color: #5B3FBF; " class="fas fa-search"></i>
-                    </button>
-                </span>
-            </div>
-        </div>
-        <div class="row form-group">
-            <div class="col"></div>
-            <div class="col">
-                <div class="table-responsive text-nowrap" style="max-height: 520px; border-radius: 20px;">
-                    <table class="table table-bordered">
-                        <thead class="thead" style="background-color:#5B3FBF;">
-                            <tr style="font-size: 18px; color: rgb(255, 255, 255); -webkit-text-stroke: 0.4px black;">
-                                <th>TESS Input Catalog ID (TIC ID)</th>
-                                <th>TESS Object of Interest (TOI)</th>
-                                <th>TESS Disposition</th>
-                                <th>Fonte</th>
-                                <th>Período (dias)</th>
-                                <th>Data de Identificação TOI</th>
-                                <th>Data de Atualização TOI</th>
-                                <th>Última Modificação</th>
-                                <th>Comentários</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for item in d.data %}
-                                <tr>
-                                    <td class="ticID" span="{{item.1}}">
-                                        <a href="#" class="btn btn-sm" style="font-size: 15px;">{{item.1}}</a>
-                                    </td>
-                                    <td>{{item.2}}</td>
-                                    <td>{{item.3}}</td>
-                                    <td>{{item.4}}</td>
-                                    <td>{{item.5}}</td>
-                                    <td>{{item.6}}</td>
-                                    <td>{{item.7}}</td>
-                                    <td>{{item.8}}</td>
-                                    <td>{{item.9}}</td>
-                                </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div class="col"></div>
-        </div>
-        <div class="row">
-            <div class="col"></div>
-            <div class="col">
-                <div class="returnModal">
-
-                </div>
-            </div>
-            <div class="col"></div>
+        <div class="input-group">
+            <input type="search" id="form1" class="form-control" />
+            <span class="input-group-append" style="z-index: 0; background-color: rgb(255, 255, 255);">
+                <button class="btn btn-outline-secondary border-left-0 border" onclick="searchInput()" type="button">
+                    <i style="color: #5B3FBF; " class="fas fa-search"></i>
+                </button>
+            </span>
         </div>
     </div>
-    <script>
-        var obj = document.querySelectorAll(".ticID");
+    <div class="row form-group">
+        <div class="col"></div>
+        <div class="col">
+            <div class="table-responsive text-nowrap" style="max-height: 520px; border-radius: 20px;">
+                <table class="table table-bordered" id="objTable">
+                    <thead class="thead" style="background-color:#5B3FBF;">
+                        <tr style="font-size: 18px; color: rgb(255, 255, 255); -webkit-text-stroke: 0.4px black;">
+                            <th>TESS Input Catalog ID (TIC ID)</th>
+                            <th>TESS Object of Interest (TOI)</th>
+                            <th>TESS Disposition</th>
+                            <th>Fonte</th>
+                            <th>Período (dias)</th>
+                            <th>Data de Identificação TOI</th>
+                            <th>Data de Atualização TOI</th>
+                            <th>Última Modificação</th>
+                            <th>Comentários</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in d.data %}
+                        <tr>
+                            <td class="ticID" span="{{item.1}}">
+                                <a href="#" class="btn btn-sm" style="font-size: 15px;">{{item.1}}</a>
+                            </td>
+                            <td>{{item.2}}</td>
+                            <td>{{item.3}}</td>
+                            <td>{{item.4}}</td>
+                            <td>{{item.5}}</td>
+                            <td>{{item.6}}</td>
+                            <td>{{item.7}}</td>
+                            <td>{{item.8}}</td>
+                            <td>{{item.9}}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col"></div>
+    </div>
+    <div class="row">
+        <div class="col"></div>
+        <div class="col-6">
+            <div class="returnModal">
 
-        function abrirModal() {
-            ticID = this.getAttribute("span");
-                $.ajax({
-                    url: "{% url 'modal' %}",
-                    type: "POST",
-                    data: { csrfmiddlewaretoken: "{{ csrf_token }}", id : ticID },
-                    success: function (response) {
-                        $(".returnModal").html(response);
-                        $("#obsModal").show();
-                    }
-                });
-        }
+            </div>
+        </div>
+        <div class="col"></div>
+    </div>
+</div>
+<script>
+    var obj = document.querySelectorAll(".ticID");
 
-        obj.forEach(function (item) {
-            item.addEventListener("click", abrirModal);
+    function abrirModal() {
+        ticID = this.getAttribute("span");
+        $.ajax({
+            url: "{% url 'modal' %}",
+            type: "POST",
+            data: { csrfmiddlewaretoken: "{{ csrf_token }}", id: ticID },
+            success: function (response) {
+                $(".returnModal").html(response);
+                $("#obsModal").show();
+            }
         });
+    }
 
-    </script>
+    obj.forEach(function (item) {
+        item.addEventListener("click", abrirModal);
+    });
+
+    function searchInput() {
+
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("form1");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("objTable");
+        tr = table.getElementsByTagName("tr");
+
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+
+</script>
 {% endblock %}
