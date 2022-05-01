@@ -82,6 +82,8 @@
             var csvContent;
             var downloadLink;
             var filename;
+            var id = {{id}};
+            var index = {{index}};
 
             csvColumns = '';
             for (var i = 0; i < data.getNumberOfColumns(); i++) {
@@ -94,7 +96,7 @@
 
             csvContent = csvColumns + google.visualization.dataTableToCsv(data);
 
-            filename = 'lightcurve.csv';
+            filename = 'lightcurve_'+id+'_'+index+'.csv';
             downloadLink = document.createElement('a');
             downloadLink.href = 'data:text/csv;charset=utf-8,' + encodeURI(csvContent);
             downloadLink.download = filename;
