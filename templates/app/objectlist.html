@@ -98,6 +98,7 @@
             success: function (response) {
                 $(".returnModal").html(response);
                 $("#obsModal").show();
+                $('.overlay').fadeIn(1000);
             }
         });
     }
